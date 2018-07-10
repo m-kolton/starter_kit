@@ -65,6 +65,7 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
 
     /**
      * Check if CustomArrayList is empty. CustomArrayList is empty when currentSize equals 0.
+     * @return true if list is empty
      */
     @Override
     public boolean isEmpty() {
@@ -75,8 +76,9 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
     }
 
     /**
-     * Check if CustomArrayList contain searched object
-     */
+	 * Returns true if list contains specified element.
+	 * @return true if list contains element
+	 */
     @Override
     public boolean contains(Object o) {
         return indexOf(o) != -1;
@@ -118,6 +120,10 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
     	dataStructure = newDecreasedDataStructure;
     }
     
+    /**
+     * Checks range of index.
+     * @throws IndexOutOfBoundsException
+     */
     private void checkBoundaries(int index) {
     	if(index < 0 || index > currentSize) {
     		throw new IndexOutOfBoundsException("Index out of range!");
@@ -125,8 +131,9 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
     }
     
     /**
-     * Adds generic type element to CustomArrayList
-     */
+	 * Inserts element at the end of list.
+	 * @return returns true if success
+	 */
     @Override
     public boolean add(T t) {
        	if(currentSize >= dataStructure.length * MAX_FILL_RATE){
@@ -139,8 +146,9 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
     }
 
     /**
-     * Removes object from CustomArrayList
-     */
+	 * Removes object from list.
+	 * @return returns true if success
+	 */
     @Override
     public boolean remove(Object o) {
         if((currentSize <= dataStructure.length * MIN_FILL_RATE) && (dataStructure.length > DEFAULT_CAPACITY)) {
@@ -160,8 +168,8 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
     }
 
     /**
-     * Removes from CustomArrayList all of the elements. Size of list is zero now.
-     */
+	 * Removes all the elements from list and sets size as 0.
+	 */
     @Override
     public void clear() {
     	for(int i=0; i<currentSize; i++) {
@@ -171,22 +179,26 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
     }
 
     /**
-     * Gives an object at specified index of CustomArrayList
-     */
+	 * Returns element at specified index.
+	 * @return returns element at specified index
+	 */
     @Override
     @SuppressWarnings("unchecked")
     public T get(int index) {
+    	checkBoundaries(index);
     	
     	T searchedValue = (T) dataStructure[index];
         return searchedValue;
     }
 
     /**
-     * Sets an object at specified index of CustomArrayList
-     */
+	 * Replaces element at specified index.
+	 * @return element previously stored at specified index
+	 */
     @Override
     @SuppressWarnings("unchecked")
     public T set(int index, T element) {
+    	checkBoundaries(index);
     	
     	T changedValue = (T) dataStructure[index];
     	dataStructure[index] = element;
@@ -194,8 +206,8 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
     }
 
     /**
-     * Adds an object at specified index of CustomArrayList
-     */
+	 * Inserts element at the specified index of list
+	 */
     @Override
     public void add(int index, T element) {
     	if(currentSize >= dataStructure.length * MAX_FILL_RATE){
@@ -213,8 +225,9 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
     }
 
     /**
-     * Removes an object at specified index of CustomArrayList
-     */
+	 * Removes element at specified index from list.
+	 * @return returns element removed from list
+	 */
     @Override
     @SuppressWarnings("unchecked")
     public T remove(int index) {
@@ -234,8 +247,9 @@ public class CustomArrayList<T> extends AbstractCustomListAdapter<T> {
     }
 
     /**
-     * Gives index of an object
-     */
+	 * Returns index of first specified element or -1 if element doesn't exist
+	 * @return index of specified element
+	 */
     @Override
     public int indexOf(Object o) {
         

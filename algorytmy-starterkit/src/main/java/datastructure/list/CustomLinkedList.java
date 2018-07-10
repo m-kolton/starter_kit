@@ -34,16 +34,16 @@ public class CustomLinkedList<T> extends AbstractCustomListAdapter<T> {
 	}
 
 	/**
-	 * Returns size of list.
-	 * @return size of list
-	 */
+     * Returns number of elements in list
+     * @return number of elements in list
+     */
 	@Override
 	public int size() {
 		return currentSize;
 	}
 
 	/**
-	 * Check if CustomArrayList is empty. CustomArrayList is empty when currentSize equals 0.
+	 * Check if CustomLinkedList is empty. CustomLinkedList is empty when currentSize equals 0.
 	 * @return true if list is empty
 	 */
 	@Override
@@ -69,7 +69,7 @@ public class CustomLinkedList<T> extends AbstractCustomListAdapter<T> {
 	}
 
 	/**
-	 * Inserts element at the end of list
+	 * Inserts element at the end of list.
 	 * @return returns true if success
 	 */
 	@Override
@@ -146,9 +146,19 @@ public class CustomLinkedList<T> extends AbstractCustomListAdapter<T> {
 
 		return currentNode;
 	}
+	
+	  /**
+     * Checks range of index.
+     * @throws IndexOutOfBoundsException
+     */
+    private void checkBoundaries(int index) {
+    	if(index < 0 || index > currentSize) {
+    		throw new IndexOutOfBoundsException("Index out of range!");
+    	}
+    }
 
 	/**
-	 * Returms element at specified index.
+	 * Returss element at specified index.
 	 * @return returns element at specified index
 	 * @throws IndexOutOfBoundsException when index is out of range
 	 */
@@ -166,12 +176,13 @@ public class CustomLinkedList<T> extends AbstractCustomListAdapter<T> {
 	/**
 	 * Replaces element at specified index.
 	 * @return element previously stored at specified index
-	 * @throws IndexOutOfBoundsException when index is out of range
 	 */
 	@Override
 	public T set(int index, T element) {
 		Node settedNode;
 		T oldElement;
+		
+		checkBoundaries(index);
 
 		settedNode = search(index);
 		oldElement = (T) settedNode.getData();
@@ -183,7 +194,6 @@ public class CustomLinkedList<T> extends AbstractCustomListAdapter<T> {
 
 	/**
 	 * Inserts element at the specified index of list
-	 * @throws IndexOutOfBoundsException when index is out of range
 	 */
 	@Override
 	public void add(int index, T element) {
@@ -191,13 +201,12 @@ public class CustomLinkedList<T> extends AbstractCustomListAdapter<T> {
 		Node removedNode;
 		Node insertedNode = new Node(element);
 
-		if (index < 0 || index > currentSize) {
-			throw new IndexOutOfBoundsException("Index out of range!");
-		}
+		checkBoundaries(index);
 
 		if (index == 0) {
 			insertedNode.setNext(head);
 			head = insertedNode;
+			currentSize++;
 		} else {
 			previousNode = search(index - 1);
 			removedNode = search(index);
@@ -216,6 +225,8 @@ public class CustomLinkedList<T> extends AbstractCustomListAdapter<T> {
 		Node previousNode;
 		Node removedNode;
 		Node nextNode;
+		
+		checkBoundaries(index);
 
 		if(index == 0) {
 			removedNode = head;
@@ -238,7 +249,6 @@ public class CustomLinkedList<T> extends AbstractCustomListAdapter<T> {
 	 * Returns index of first specified element or -1 if element doesn't exist
 	 * @return index of specified element
 	 */
-	
 	//TODO Dopisac dla null-a
 	@Override
 	public int indexOf(Object o) {

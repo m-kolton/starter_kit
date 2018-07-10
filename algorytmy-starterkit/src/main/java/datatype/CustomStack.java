@@ -1,6 +1,6 @@
 package datatype;
 
-import java.util.List;
+import java.util.List; 
 import datastructure.list.CustomLinkedList;
 
 /**
@@ -23,8 +23,7 @@ public class CustomStack<T> extends AbstractCustomStackAdapter<T> {
      */
     @Override
     public void push(T t) {
-        storage.add(currentSize, t);
-        currentSize++;
+        storage.add(storage.size(), t);
     }
 
     /**
@@ -33,8 +32,8 @@ public class CustomStack<T> extends AbstractCustomStackAdapter<T> {
      */
     @Override
     public T pop() {
-        T deletedValue = storage.get(currentSize);
-        storage.remove(currentSize);
+        T deletedValue = storage.get(storage.size()-1);
+        storage.remove(storage.size()-1);
         
         return deletedValue;
     }
@@ -45,7 +44,7 @@ public class CustomStack<T> extends AbstractCustomStackAdapter<T> {
      */
     @Override
     public int size() {
-        return currentSize;
+        return storage.size();
     }
 
     /**
@@ -54,9 +53,6 @@ public class CustomStack<T> extends AbstractCustomStackAdapter<T> {
      */
     @Override
     public boolean isEmpty() {
-        if(currentSize == 0) {
-        	return true;
-        }
-        return false;
+        return storage.isEmpty();
     }
 }

@@ -2,6 +2,8 @@ package datastructure.list;
 
 import java.util.ArrayList;
 
+import datatype.CustomQueue;
+
 public class Main {
 	public static void main(String[] args) {
 		CustomArrayList<String> list = new CustomArrayList();
@@ -79,5 +81,10 @@ public class Main {
 //		for(int i=0; i<arrayList.size(); i++) {
 //			System.out.println(arrayList.get(i));
 //		}
+		
+		CustomQueue queue = new CustomQueue(new CustomLinkedList());
+		queue.add("String2");
+		queue.add("String1");
+		System.out.println(queue.peek());
 	}	
 }

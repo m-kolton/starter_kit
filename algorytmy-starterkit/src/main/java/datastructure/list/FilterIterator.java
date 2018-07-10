@@ -11,11 +11,10 @@ import java.util.function.Predicate;
 public class FilterIterator<T> implements Iterator<T> {
     private List<T> list;
     private Predicate<T> predicate;
-    //TODO QUESTIONS: Czy można użyc iteratora list?
     private Iterator<T> iterator;
 
     public FilterIterator(List<T> list, Predicate<T> predicate) {
-         this.list = list;
+         this.iterator = list.iterator();
          this.predicate = predicate;
     }
 
@@ -24,8 +23,6 @@ public class FilterIterator<T> implements Iterator<T> {
         return iterator.hasNext();
     }
 
-    //TODO QUESTIONS: Jak sprawdzic czy predykat jest spełniony?
-    //TODO QUESTIONS: Co zwracac jeśli predykat nie jest spełniony?
     @Override
     public T next() {
         if(!hasNext()) {
@@ -38,7 +35,6 @@ public class FilterIterator<T> implements Iterator<T> {
         return null;
     }
 
-    //TODO QUESTIONS: Czy to dobre podejście?
     @Override
     public void remove() {
         iterator.remove();

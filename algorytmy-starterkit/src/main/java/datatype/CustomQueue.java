@@ -7,8 +7,8 @@ import datastructure.list.CustomLinkedList;
  * FIFO queue
  */
 public class CustomQueue<T> extends AbstractCustomQueueAdapter<T> {
-    //TODO QUESTIONS: Czy zmienna powinna byc prywatna?
-	private List<T> storage = new CustomLinkedList<>();
+    
+	private List<T> storage = new CustomLinkedList<T>();
 	
 	/**
 	 * Number of elements in queue.
@@ -25,7 +25,7 @@ public class CustomQueue<T> extends AbstractCustomQueueAdapter<T> {
      */
     @Override
     public int size() {
-        return currentSize;
+        return storage.size();
     }
 
     /**
@@ -34,42 +34,31 @@ public class CustomQueue<T> extends AbstractCustomQueueAdapter<T> {
      */
     @Override
     public boolean isEmpty() {
-        if(currentSize == 0) {
-        	return true;
-        }
-        return false;
+        return storage.isEmpty();
     }
 
-    //TODO QUESTIONS: Czy można dodawac null?
     /**
      * Inserts object into this queue and returns true if success.
-     * @param t
-     * @return inserted object
+     * @return true if success
      */
     @Override
-    public boolean add(T t) {
-    	
+    public boolean add(T t) {	
         storage.add(t);
-        currentSize++;
-        
         return true;
     }
 
-    //TODO QUESTIONS: Czy stworzyc nową metodę zwracajaca pierwszy element tak, żeby nie powtarzac kodu?
     /**
      * Retrieves and removes the head of queue, or returns null if this queue is empty.
      * @return first object in queue or null if queue is empty
      */
     @Override
     public T poll() {
-        T deletedValue;
+        T deletedValue = null;
         
-        if(currentSize == 0) {
-        	deletedValue = null;
+        if(!isEmpty()) {
+        	deletedValue = storage.get(0);
+        	storage.remove(0);
         }
-       
-        storage.remove(0);
-        deletedValue = storage.get(0);
         
         return deletedValue;
     }
@@ -80,13 +69,11 @@ public class CustomQueue<T> extends AbstractCustomQueueAdapter<T> {
      */
     @Override
     public T peek() {
-    	 T retrievedValue;
+    	 T retrievedValue = null;
          
-         if(currentSize == 0) {
-         	retrievedValue = null;
+         if(!isEmpty()) {
+        	 retrievedValue = storage.get(0);
          }
-        
-         retrievedValue = storage.get(0);
          
          return retrievedValue;
     }
