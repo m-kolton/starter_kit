@@ -2,6 +2,8 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.util.Iterator;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,11 +11,13 @@ import datastructure.list.CustomArrayList;
 
 public class CustomArrayListTest {
 
-	private CustomArrayList arrayList;
+	CustomArrayList<String> arrayList;
+	Iterator<String> iterator;
 	
 	@Before
 	public void setUp() {
 		arrayList = new CustomArrayList<String>();
+		iterator = arrayList.iterator();
 	}
 
 	@Test
@@ -24,8 +28,14 @@ public class CustomArrayListTest {
 	}
 	
 	@Test
-	public void checkIfListIsEmpty() {
+	public void checkIfListWhenEmpty() {
 		assertTrue(arrayList.isEmpty());
+	}
+	
+	@Test
+	public void checkIfListWhenNotEmpty() {
+		arrayList.add("Grażyna");
+		assertFalse(arrayList.isEmpty());
 	}
 	
 	@Test
@@ -35,6 +45,14 @@ public class CustomArrayListTest {
 		arrayList.add("Marek");
 		assertTrue(arrayList.contains("Mateusz"));
 		assertFalse(arrayList.contains("Marlena"));
+	}
+	
+	@Test
+	public void checkIfListContainsSpecifiedElementNull() {
+		arrayList.add("Mateusz");
+		arrayList.add(null);
+		arrayList.add("Marek");
+		assertTrue(arrayList.contains(null));
 	}
 
 	@Test
@@ -47,14 +65,19 @@ public class CustomArrayListTest {
 		assertEquals("Ola", arrayList.get(0));
 	}
 	
+	@Test(expected = IndexOutOfBoundsException.class)
+	public void addElementOutOfRange() {
+		arrayList.add(-1, "Maciek");
+	}
+	
 	@Test
 	public void removeObjectFromList() {
 		arrayList.add("Mateusz");
 		arrayList.add("Marek");
-		arrayList.add("Monika");
+		arrayList.add(null);
 		arrayList.add("Malwina");
 		arrayList.remove("Mateusz");
-		arrayList.remove("Monika");
+		arrayList.remove(null);
 		assertEquals("Malwina", arrayList.get(1));
 		assertEquals("Marek", arrayList.get(0));
 	}
@@ -77,6 +100,11 @@ public class CustomArrayListTest {
 		assertEquals("Jacek", arrayList.get(2));
 		assertEquals("Paweł", arrayList.get(1));
 		assertEquals("Ola", arrayList.get(0));
+	}
+	
+	@Test(expected = IndexOutOfBoundsException.class)
+	public void getElementFromListByIndexOutOfRange() {
+		arrayList.get(-1);
 	}
 	
 	@Test
@@ -129,5 +157,41 @@ public class CustomArrayListTest {
 		assertEquals(0, arrayList.indexOf("Mateusz"));
 		assertEquals(2, arrayList.indexOf("Monika"));
 		assertEquals(-1, arrayList.indexOf("Jacek"));
+	}
+	
+	@Test
+	public void checkIndexIfNull() {
+		arrayList.add("Mateusz");
+		arrayList.add("Marek");
+		arrayList.add(null);
+		assertEquals(2, arrayList.indexOf(null));
+	}
+	
+	@Test
+	public void iteratorHasNext() {
+		arrayList.add("Marta");
+		arrayList.add("Marek");
+		assertTrue(iterator.hasNext());
+	}
+	
+	@Test
+	public void iteratorHasNextEmptyList() {
+		assertFalse(iterator.hasNext());
+	}
+	
+	@Test
+	public void iteratorReturnsValue() {
+		arrayList.add("Marta");
+		arrayList.add("Marek");
+		assertEquals("Marta", iterator.next());
+        assertEquals("Marek", iterator.next());
+	}
+	
+	@Test
+	public void iteratorMoving() {
+		while (iterator.hasNext()) {
+            iterator.next();
+        }
+        assertFalse(iterator.hasNext());
 	}
 }

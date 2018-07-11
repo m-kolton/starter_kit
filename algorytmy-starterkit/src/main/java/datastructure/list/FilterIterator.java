@@ -9,34 +9,58 @@ import java.util.function.Predicate;
  * Filter iterator
  */
 public class FilterIterator<T> implements Iterator<T> {
-    private List<T> list;
-    private Predicate<T> predicate;
-    private Iterator<T> iterator;
+	private Predicate<T> predicate;
+	private Iterator<T> iterator;
 
-    public FilterIterator(List<T> list, Predicate<T> predicate) {
-         this.iterator = list.iterator();
-         this.predicate = predicate;
-    }
+	/**
+	 * Creates new FilterIterator with list and predicate.
+	 * 
+	 * @param list
+	 * @param predicate
+	 */
+	public FilterIterator(List<T> list, Predicate<T> predicate) {
+		this.iterator = list.iterator();
+		this.predicate = predicate;
+	}
 
-    @Override
-    public boolean hasNext() {
-        return iterator.hasNext();
-    }
+	/**
+	 * Check if iteration has more elements
+	 * 
+	 * @return true if there are more elements in iteration
+	 */
+	@Override
+	public boolean hasNext() {
+		return iterator.hasNext();
+	}
 
-    @Override
-    public T next() {
-        if(!hasNext()) {
-        	throw new NoSuchElementException("Illegal operation");
-        }
-        T next = iterator.next();
-        if(predicate.test(next)) {
-        	return next;
-        }
-        return null;
-    }
+	/**
+	 * Return next element in iteration
+	 * 
+	 * @return next element in iteration which fulfill predicate
+	 * @throws NoSuchElementException
+	 *             if there are no next elements which fulfill predicate in iteration
+	 */
+	@Override
+	public T next() {
+		T next = iterator.next();
+		
+		if(hasNext()) {
+			while (!predicate.test(next))
+				next = iterator.next();
+		} else {
+			throw new NoSuchElementException();
+		}
+		
+		return next;
+	}
 
-    @Override
-    public void remove() {
-        iterator.remove();
-    }
+	/**
+	 * Always throws UnsupportedOperationException.
+	 * 
+	 * @throws UnsupportedOperationException
+	 */
+	@Override
+	public void remove() {
+		throw new UnsupportedOperationException();
+	}
 }

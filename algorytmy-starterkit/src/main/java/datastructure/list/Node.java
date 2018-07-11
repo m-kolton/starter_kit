@@ -5,21 +5,23 @@ package datastructure.list;
  * element.
  */
 public class Node {
-	//TODO QUESTIONS: Czy nie powinien tutaj byc typ generyczny Node<T>?
+
 	/**
 	 * Value of object stored in CustomLinkedList
 	 */
 	private Object data;
-	
+
 	/**
 	 * Pointer to next object
 	 */
 	private Node next;
 
-	//TODO QUESTIONS: Czy potrzeba dwóch róznych konstruktorów?
 	/**
-	 * Constructor sets argument as an element; inserting at the beggining of list
+	 * Constructor sets argument as an element; inserting at the beginning of
+	 * list
+	 * 
 	 * @param data
+	 *            object to be stored id node
 	 */
 	public Node(Object data) {
 		this.data = data;
@@ -27,15 +29,19 @@ public class Node {
 	}
 
 	/**
-	 * Constructor sets the value of element and indicates the next node; inserting in the middle of list
+	 * Constructor sets the value of element and indicates the next node;
+	 * inserting in the middle of list
+	 * 
 	 * @param data
+	 *            object to be stored id node
 	 * @param next
+	 *            pointer to next node
 	 */
 	public Node(Object data, Node next) {
 		this.data = data;
 		this.next = next;
 	}
-	
+
 	public Object getData() {
 		return data;
 	}
